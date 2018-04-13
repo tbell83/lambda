@@ -21,8 +21,8 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_policy" "lambda" {
   count = "${var.count}"
 
-  name   = "lambda_execution_policy"
-  path   = "/${var.name}/"
+  name   = "${var.name}_lambda_execution_policy"
+  path   = "/lambda_module/"
   policy = "${data.aws_iam_policy_document.lambda.json}"
 }
 
@@ -57,8 +57,8 @@ data "aws_iam_policy_document" "lambda" {
 
 resource "aws_iam_policy" "in_vpc" {
   count  = "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? var.count : 0 }"
-  name   = "in_vpc"
-  path   = "/${var.name}/"
+  name   = "${var.name}_in_vpc"
+  path   = "/lambda_module/"
   policy = "${data.aws_iam_policy_document.in_vpc.json}"
 }
 
