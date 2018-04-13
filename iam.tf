@@ -1,9 +1,13 @@
 resource "aws_iam_role" "lambda" {
+  count = "${var.count}"
+
   name               = "${var.name}"
   assume_role_policy = "${data.aws_iam_policy_document.assume_role.json}"
 }
 
 data "aws_iam_policy_document" "assume_role" {
+  count = "${var.count}"
+
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -15,17 +19,23 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_policy" "lambda" {
+  count = "${var.count}"
+
   name   = "lambda_execution_policy"
   path   = "/${var.name}/"
   policy = "${data.aws_iam_policy_document.lambda.json}"
 }
 
 resource "aws_iam_role_policy_attachment" "lambda-lambda" {
+  count = "${var.count}"
+
   role       = "${aws_iam_role.lambda.name}"
   policy_arn = "${aws_iam_policy.lambda.arn}"
 }
 
 data "aws_iam_policy_document" "lambda" {
+  count = "${var.count}"
+
   source_json = "${var.lambda_role_policy_json}"
 
   statement {
@@ -46,14 +56,14 @@ data "aws_iam_policy_document" "lambda" {
 }
 
 resource "aws_iam_policy" "in_vpc" {
-  count  = "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? 1 : 0 }"
+  count  = "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? var.count : 0 }"
   name   = "in_vpc"
   path   = "/${var.name}/"
   policy = "${data.aws_iam_policy_document.in_vpc.json}"
 }
 
 resource "aws_iam_role_policy_attachment" "lambda-in_vpc" {
-  count      = "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? 1 : 0 }"
+  count      = "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? var.count : 0 }"
   role       = "${aws_iam_role.lambda.name}"
   policy_arn = "${aws_iam_policy.in_vpc.arn}"
 }
