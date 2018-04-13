@@ -1,4 +1,6 @@
 resource "aws_lambda_function" "lambda" {
+  count = "${var.count}"
+
   s3_bucket     = "${var.s3_bucket}"
   s3_key        = "${var.s3_key}"
   function_name = "${var.name}"
@@ -20,5 +22,10 @@ resource "aws_lambda_function" "lambda" {
   }
 }
 
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
+data "aws_caller_identity" "current" {
+  count = "${var.count}"
+}
+
+data "aws_region" "current" {
+  count = "${var.count}"
+}

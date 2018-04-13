@@ -8,6 +8,10 @@ variable "name" {
   type        = "string"
 }
 
+variable "count" {
+  default = 1
+}
+
 variable "runtime" {
   description = "Lambda runtime"
   type        = "string"
