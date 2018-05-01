@@ -76,3 +76,9 @@ variable "environment_variables" {
     "foo" = "bar"
   }
 }
+
+variable "log_retention" {
+  description = "Cloudwatch log retention in days."
+  type        = "string"
+  default     = 7
+}
