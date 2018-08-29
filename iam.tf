@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "assume_role" {
     principals {
       identifiers = ["${compact(list(
         "lambda.amazonaws.com",
-        "${var.edge = "true" ? "lambda.amazonaws.com" : ""}"
+        "${var.edge = "true" ? "edgelambda.amazonaws.com" : ""}"
       ))}"]
       type        = "Service"
     }
