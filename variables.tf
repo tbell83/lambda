@@ -12,6 +12,10 @@ variable "count" {
   default = 1
 }
 
+variable "edge" {
+  default = "false"
+}
+
 variable "runtime" {
   description = "Lambda runtime"
   type        = "string"

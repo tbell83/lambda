@@ -12,7 +12,10 @@ data "aws_iam_policy_document" "assume_role" {
     actions = ["sts:AssumeRole"]
 
     principals {
-      identifiers = ["lambda.amazonaws.com"]
+      identifiers = ["${compact(list(
+        "lambda.amazonaws.com",
+        "${var.edge == "true" ? "edgelambda.amazonaws.com" : ""}"
+      ))}"]
       type        = "Service"
     }
   }
