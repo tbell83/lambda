@@ -1,3 +1,15 @@
+## Resources
+
+```
+aws_lambda_function.lambda
+aws_lambda_function.lambda_edge
+aws_cloudwatch_log_group.lambda
+aws_iam_role.lambda
+aws_iam_policy.lambda
+aws_iam_role_policy_attachment.lambda-lambda
+aws_iam_policy.in_vpc
+aws_iam_role_policy_attachment.lambda-in_vpc
+```
 
 ## Inputs
 
