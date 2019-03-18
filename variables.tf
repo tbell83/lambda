@@ -36,11 +36,19 @@ variable "memory_size" {
 variable "s3_bucket" {
   description = "The S3 bucket location containing the function's deployment package. Conflicts with filename."
   type        = "string"
+  default     = ""
 }
 
 variable "s3_key" {
   description = "The S3 key of an object containing the function's deployment package. Conflicts with filename."
   type        = "string"
+  default     = ""
+}
+
+variable "filename" {
+  description = "The path to the function's deployment package within the local filesystem. If defined, The s3_-prefixed options cannot be used."
+  type        = "string"
+  default     = ""
 }
 
 variable "vpc_config_subnet_ids" {
