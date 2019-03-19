@@ -19,6 +19,6 @@ locals {
     join(",", aws_lambda_function.lambda_file.*.invoke_arn)
   )}"
 
-  lambda_role_arn  = "${data.aws_iam_role.lambda.*.arn}"
-  lambda_role_name = "${data.aws_iam_role.lambda.*.name}"
+  lambda_role_arn  = "${var.lambda_role == "" ? aws_iam_role.lambda.arn : data.aws_iam_role.lambda.arn}"
+  lambda_role_name = "${var.lambda_role == "" ? aws_iam_role.lambda.name : data.aws_iam_role.lambda.name}"
 }
