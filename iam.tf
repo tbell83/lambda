@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda" {
-  count = "${var.count}"
+  count = "${var.lambda_role == "" && var.count > 0 ? 1 : 0}"
 
   name               = "${var.name}"
   assume_role_policy = "${data.aws_iam_policy_document.assume_role.json}"
@@ -16,7 +16,8 @@ data "aws_iam_policy_document" "assume_role" {
         "lambda.amazonaws.com",
         "${var.edge == "true" ? "edgelambda.amazonaws.com" : ""}"
       ))}"]
-      type        = "Service"
+
+      type = "Service"
     }
   }
 }
@@ -24,7 +25,7 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_policy" "lambda" {
   count = "${var.count}"
 
-  name   = "${var.name}_lambda_execution_policy"
+  name   = "${var.name}_lambda_execution_policy_${data.aws_region.current.name}"
   path   = "/lambda_module/"
   policy = "${data.aws_iam_policy_document.lambda.json}"
 }
@@ -32,7 +33,7 @@ resource "aws_iam_policy" "lambda" {
 resource "aws_iam_role_policy_attachment" "lambda-lambda" {
   count = "${var.count}"
 
-  role       = "${aws_iam_role.lambda.name}"
+  role       = "${var.lambda_role != "" ? join("", data.aws_iam_role.lambda.*.name) : join("", aws_iam_role.lambda.*.name)}"
   policy_arn = "${aws_iam_policy.lambda.arn}"
 }
 
@@ -67,7 +68,7 @@ resource "aws_iam_policy" "in_vpc" {
 
 resource "aws_iam_role_policy_attachment" "lambda-in_vpc" {
   count      = "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? var.count : 0 }"
-  role       = "${aws_iam_role.lambda.name}"
+  role       = "${var.lambda_role != "" ? join("", data.aws_iam_role.lambda.*.name) : join("", aws_iam_role.lambda.*.name)}"
   policy_arn = "${aws_iam_policy.in_vpc.arn}"
 }
 

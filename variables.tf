@@ -94,3 +94,9 @@ variable "log_retention" {
   type        = "string"
   default     = 7
 }
+
+variable "lambda_role" {
+  description = "Lambda role name to use as lambda execution role.  By default the module will create a role if none is provided."
+  type        = "string"
+  default     = ""
+}
