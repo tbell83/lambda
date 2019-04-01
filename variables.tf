@@ -103,6 +103,12 @@ variable "lambda_role" {
 
 variable "lambda_function_name" {
   description = "(Optional) Name for the lambda function.  By default is generated using var.name-var.region."
-  type = "string"
-  default = ""
+  type        = "string"
+  default     = ""
+}
+
+variable "lambda_policy_name" {
+  description = "(Optional) Name for the lambda function.  By default is generated using \"${var.name}_lambda_execution_policy_${data.aws_region.current.name}\"."
+  type        = "string"
+  default     = ""
 }
