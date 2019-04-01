@@ -3,7 +3,7 @@ resource "aws_lambda_function" "lambda" {
 
   s3_bucket     = "${var.s3_bucket}"
   s3_key        = "${var.s3_key}"
-  function_name = "${var.name}"
+  function_name = "${var.lambda_function_name != "" ? var.lambda_function_name : var.name}"
   runtime       = "${var.runtime}"
   handler       = "${var.handler}"
   tags          = "${var.tags}"
@@ -27,7 +27,7 @@ resource "aws_lambda_function" "lambda_edge" {
 
   s3_bucket     = "${var.s3_bucket}"
   s3_key        = "${var.s3_key}"
-  function_name = "${var.name}"
+  function_name = "${var.lambda_function_name != "" ? var.lambda_function_name : var.name}"
   runtime       = "${var.runtime}"
   handler       = "${var.handler}"
   tags          = "${var.tags}"
@@ -69,7 +69,7 @@ resource "aws_lambda_function" "lambda_edge_file" {
   count = "${var.edge == "true" && var.filename != "" ? var.count : 0}"
 
   filename      = "${var.filename}"
-  function_name = "${var.name}"
+  function_name = "${var.lambda_function_name != "" ? var.lambda_function_name : var.name}"
   runtime       = "${var.runtime}"
   handler       = "${var.handler}"
   tags          = "${var.tags}"
