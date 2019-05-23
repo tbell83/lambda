@@ -8,7 +8,7 @@ variable "name" {
   type        = "string"
 }
 
-variable "count" {
+variable "mod_count" {
   default = 1
 }
 
