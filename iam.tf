@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_policy" "lambda" {
   count = "${var.mod_count}"
 
-  name   = "${var.lambda_policy_name != "" ? var.lambda_policy_name : "${var.name}_lambda_execution_policy_${data.aws_region.current.name}"}"
+  name   = "${var.lambda_policy_name != "" ? var.lambda_policy_name : "${var.name}_lambda_execution_policy_${join("", data.aws_region.current.*.name)}"}"
   path   = "/lambda_module/"
   policy = "${join("", data.aws_iam_policy_document.lambda.*.json)}"
 }
@@ -44,13 +44,13 @@ data "aws_iam_policy_document" "lambda" {
 
   statement {
     sid       = "CreateCloudwatchLogGroups"
-    resources = ["arn:aws:logs:${data.aws_region.current.name}:${join("", data.aws_caller_identity.current.*.account_id)}:*"]
+    resources = ["arn:aws:logs:${join("", data.aws_region.current.*.name)}:${join("", data.aws_caller_identity.current.*.account_id)}:*"]
     actions   = ["logs:CreateLogGroup"]
   }
 
   statement {
     sid       = "WriteCloudwatchLogs"
-    resources = ["arn:aws:logs:${data.aws_region.current.name}:${join("", data.aws_caller_identity.current.*.account_id)}:log-group:/aws/lambda/${var.name}:*"]
+    resources = ["arn:aws:logs:${join("", data.aws_region.current.*.name)}:${join("", data.aws_caller_identity.current.*.account_id)}:log-group:/aws/lambda/${var.name}:*"]
 
     actions = [
       "logs:CreateLogStream",
