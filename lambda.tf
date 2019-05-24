@@ -12,12 +12,12 @@ resource "aws_lambda_function" "lambda" {
   timeout       = "${var.timeout}"
   role          = "${var.lambda_role != "" ? join("", data.aws_iam_role.lambda.*.arn) : join("", aws_iam_role.lambda.*.arn)}"
 
-  vpc_config {
+  vpc_config = {
     subnet_ids         = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_subnet_ids)}" : ""}"))}"]
-    security_group_ids = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_security_group_ids)}" :  ""}"))}"]
+    security_group_ids = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_security_group_ids)}" : ""}"))}"]
   }
 
-  environment {
+  environment = {
     variables = "${var.environment_variables}"
   }
 }
@@ -36,9 +36,9 @@ resource "aws_lambda_function" "lambda_edge" {
   timeout       = "${var.timeout}"
   role          = "${var.lambda_role != "" ? join("", data.aws_iam_role.lambda.*.arn) : join("", aws_iam_role.lambda.*.arn)}"
 
-  vpc_config {
+  vpc_config = {
     subnet_ids         = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_subnet_ids)}" : ""}"))}"]
-    security_group_ids = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_security_group_ids)}" :  ""}"))}"]
+    security_group_ids = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_security_group_ids)}" : ""}"))}"]
   }
 }
 
@@ -55,12 +55,12 @@ resource "aws_lambda_function" "lambda_file" {
   timeout       = "${var.timeout}"
   role          = "${var.lambda_role != "" ? join("", data.aws_iam_role.lambda.*.arn) : join("", aws_iam_role.lambda.*.arn)}"
 
-  vpc_config {
+  vpc_config = {
     subnet_ids         = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_subnet_ids)}" : ""}"))}"]
-    security_group_ids = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_security_group_ids)}" :  ""}"))}"]
+    security_group_ids = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_security_group_ids)}" : ""}"))}"]
   }
 
-  environment {
+  environment = {
     variables = "${var.environment_variables}"
   }
 }
@@ -78,8 +78,8 @@ resource "aws_lambda_function" "lambda_edge_file" {
   timeout       = "${var.timeout}"
   role          = "${var.lambda_role != "" ? join("", data.aws_iam_role.lambda.*.arn) : join("", aws_iam_role.lambda.*.arn)}"
 
-  vpc_config {
+  vpc_config = {
     subnet_ids         = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_subnet_ids)}" : ""}"))}"]
-    security_group_ids = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_security_group_ids)}" :  ""}"))}"]
+    security_group_ids = ["${compact(split(",", "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? "${join(",", var.vpc_config_security_group_ids)}" : ""}"))}"]
   }
 }
