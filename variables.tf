@@ -112,3 +112,8 @@ variable "lambda_policy_name" {
   type        = "string"
   default     = ""
 }
+
+variable "assume_principals" {
+  description = "List of ARNs that can assume the execution policy in addition to the Lambda/Lambda@Edge services."
+  default     = []
+}
