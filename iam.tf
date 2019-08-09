@@ -22,6 +22,14 @@ data "aws_iam_policy_document" "assume_role" {
 
       type = "Service"
     }
+
+    dynamic "principals" {
+      for_each = len(var.assume_principals)
+      content {
+        type        = "AWS"
+        identifiers = var.assume_principals
+      }
+    }
   }
 }
 
