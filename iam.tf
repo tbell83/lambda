@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "assume_role" {
     }
 
     dynamic "principals" {
-      for_each = length(var.assume_principals)
+      for_each = length(var.assume_principals) > 0 ? [1] : []
       content {
         type        = "AWS"
         identifiers = var.assume_principals
