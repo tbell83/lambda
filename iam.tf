@@ -17,7 +17,6 @@ data "aws_iam_policy_document" "assume_role" {
           "lambda.amazonaws.com",
           "${var.edge == "true" ? "edgelambda.amazonaws.com" : ""}"
         )),
-        "${var.assume_principals}"
       )}"
 
       type = "Service"
