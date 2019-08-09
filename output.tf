@@ -6,7 +6,7 @@ output "lambda_arn" {
   value = "${local.lambda_arn}"
 }
 
-output "lambda_arn" {
+output "lambda_function_name" {
   value = "${local.lambda_function_name}"
 }
 
