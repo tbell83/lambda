@@ -19,6 +19,27 @@ locals {
     join(",", aws_lambda_function.lambda_file.*.invoke_arn)
   )}"
 
+  lambda_qualified_arn = "${split(",",
+    var.edge == "true" && var.s3_bucket != "" && var.s3_key != "" ?
+    join(",", aws_lambda_function.lambda_edge.*.qualified_arn) :
+    var.edge == "true" && var.filename != "" ?
+    join(",", aws_lambda_function.lambda_edge_file.*.qualified_arn) :
+    var.edge == "false" && var.s3_bucket != "" && var.s3_key != "" ?
+    join(",", aws_lambda_function.lambda.*.qualified_arn) :
+    join(",", aws_lambda_function.lambda_file.*.qualified_arn)
+  )}"
+
+  lambda_version = "${split(",",
+    var.edge == "true" && var.s3_bucket != "" && var.s3_key != "" ?
+    join(",", aws_lambda_function.lambda_edge.*.version) :
+    var.edge == "true" && var.filename != "" ?
+    join(",", aws_lambda_function.lambda_edge_file.*.version) :
+    var.edge == "false" && var.s3_bucket != "" && var.s3_key != "" ?
+    join(",", aws_lambda_function.lambda.*.version) :
+    join(",", aws_lambda_function.lambda_file.*.version)
+  )}"
+
+
   lambda_function_name = "${split(",",
     var.edge == "true" && var.s3_bucket != "" && var.s3_key != "" ?
     join(",", aws_lambda_function.lambda_edge.*.function_name) :

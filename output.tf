@@ -14,6 +14,14 @@ output "lambda_role_arn" {
   value = "${local.lambda_role_arn}"
 }
 
+output "lambda_qualified_arn" {
+  value = "${local.lambda_qualified_arn}"
+}
+
+output "lambda_version" {
+  value = "${local.lambda_version}"
+}
+
 output "lambda_role_name" {
   value = "${local.lambda_role_name}"
 }
