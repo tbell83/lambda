@@ -50,6 +50,8 @@ locals {
     join(",", aws_lambda_function.lambda_file.*.function_name)
   )}"
 
-  lambda_role_arn  = "${var.lambda_role == "" ? join("", aws_iam_role.lambda.*.arn) : join("", data.aws_iam_role.lambda.*.arn)}"
-  lambda_role_name = "${var.lambda_role == "" ? join("", aws_iam_role.lambda.*.name) : join("", data.aws_iam_role.lambda.*.name)}"
+  lambda_role_arn       = "${var.lambda_role == "" ? join("", aws_iam_role.lambda.*.arn) : join("", data.aws_iam_role.lambda.*.arn)}"
+  lambda_role_name      = "${var.lambda_role == "" ? join("", aws_iam_role.lambda.*.name) : join("", data.aws_iam_role.lambda.*.name)}"
+  lambda_role_unique_id = "${var.lambda_role == "" ? join("", aws_iam_role.lambda.*.unique_id) : join("", data.aws_iam_role.lambda.*.unique_id)}"
+
 }

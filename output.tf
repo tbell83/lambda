@@ -25,3 +25,7 @@ output "lambda_version" {
 output "lambda_role_name" {
   value = "${local.lambda_role_name}"
 }
+
+output "lambda_role_unique_id" {
+  value = "${local.lambda_role_unique_id}"
+}
