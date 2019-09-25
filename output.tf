@@ -29,3 +29,7 @@ output "lambda_role_name" {
 output "lambda_role_unique_id" {
   value = "${local.lambda_role_unique_id}"
 }
+
+output "lambda_role_id" {
+  value = "${local.lambda_role_id}"
+}
