@@ -117,3 +117,9 @@ variable "assume_principals" {
   description = "List of ARNs that can assume the execution policy in addition to the Lambda/Lambda@Edge services."
   default     = []
 }
+
+variable "layers" {
+  description = "lambda layers to be used by this function"
+  type        = "list"
+  default     = []
+}
