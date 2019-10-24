@@ -6,6 +6,7 @@ resource "aws_lambda_function" "lambda" {
   function_name = "${var.lambda_function_name != "" ? var.lambda_function_name : var.name}"
   runtime       = "${var.runtime}"
   handler       = "${var.handler}"
+  layers        = "${var.layers}"
   tags          = "${var.tags}"
   description   = "${var.description}"
   memory_size   = "${var.memory_size}"
