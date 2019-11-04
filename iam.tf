@@ -71,7 +71,7 @@ data "aws_iam_policy_document" "lambda" {
 
 resource "aws_iam_policy" "in_vpc" {
   count  = "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? var.mod_count : 0}"
-  name   = "${var.name}_in_vpc"
+  name   = "${var.name}_in_vpc_${join("", data.aws_region.current.*.name)}"
   path   = "/lambda_module/"
   policy = "${join("", data.aws_iam_policy_document.in_vpc.*.json)}"
 }
