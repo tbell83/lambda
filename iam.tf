@@ -69,17 +69,12 @@ data "aws_iam_policy_document" "lambda" {
   }
 }
 
-resource "aws_iam_policy" "in_vpc" {
-  count  = "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? var.mod_count : 0}"
-  name   = "${var.name}_in_vpc"
-  path   = "/lambda_module/"
-  policy = "${join("", data.aws_iam_policy_document.in_vpc.*.json)}"
-}
+resource "aws_iam_role_policy" "in_vpc" {
+  count = length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? var.mod_count : 0
 
-resource "aws_iam_role_policy_attachment" "lambda-in_vpc" {
-  count      = "${length(var.vpc_config_security_group_ids) != 0 && length(var.vpc_config_subnet_ids) != 0 ? var.mod_count : 0}"
-  role       = "${var.lambda_role != "" ? join("", data.aws_iam_role.lambda.*.name) : join("", aws_iam_role.lambda.*.name)}"
-  policy_arn = "${join("", aws_iam_policy.in_vpc.*.arn)}"
+  name   = "${var.name}_in_vpc-${data.aws_region.current[count.index].name}"
+  role   = var.lambda_role != "" ? data.aws_iam_role.lambda[count.index].name : aws_iam_role.lambda[count.index].name
+  policy = data.aws_iam_policy_document.in_vpc[count.index].json
 }
 
 data "aws_iam_policy_document" "in_vpc" {
