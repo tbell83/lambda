@@ -74,7 +74,7 @@ resource "aws_iam_role_policy" "in_vpc" {
 
   name   = "${var.name}_in_vpc-${data.aws_region.current[count.index].name}"
   role   = var.lambda_role != "" ? data.aws_iam_role.lambda[count.index].name : aws_iam_role.lambda[count.index].name
-  policy = data.aws_iam_policy_document.in_vpc[count.index].json
+  policy = data.aws_iam_policy_document.in_vpc.json
 }
 
 data "aws_iam_policy_document" "in_vpc" {
