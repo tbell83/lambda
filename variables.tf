@@ -123,3 +123,7 @@ variable "layers" {
   type        = "list"
   default     = []
 }
+
+variable "reserved_concurrent_executions" {
+  default = -1
+}
