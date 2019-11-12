@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "assume_role" {
       identifiers = "${concat(
         compact(list(
           "lambda.amazonaws.com",
-          "${var.edge == "true" ? "edgelambda.amazonaws.com" : ""}"
+          "${var.edge == "true" || var.edge == true ? "edgelambda.amazonaws.com" : ""}"
         )),
       )}"
 
