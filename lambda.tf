@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "lambda" {
-  count = "${var.edge == "false" && var.s3_bucket != "" && var.s3_key != "" ? var.mod_count : 0}"
+  count = "${(var.edge == "false" || var.edge == false) && var.s3_bucket != "" && var.s3_key != "" ? var.mod_count : 0}"
 
   s3_bucket                      = "${var.s3_bucket}"
   s3_key                         = "${var.s3_key}"
@@ -25,7 +25,7 @@ resource "aws_lambda_function" "lambda" {
 }
 
 resource "aws_lambda_function" "lambda_edge" {
-  count = "${var.edge == "true" && var.s3_bucket != "" && var.s3_key != "" ? var.mod_count : 0}"
+  count = "${(var.edge == "true" || var.edge == true) && var.s3_bucket != "" && var.s3_key != "" ? var.mod_count : 0}"
 
   s3_bucket     = "${var.s3_bucket}"
   s3_key        = "${var.s3_key}"
@@ -45,7 +45,7 @@ resource "aws_lambda_function" "lambda_edge" {
 }
 
 resource "aws_lambda_function" "lambda_file" {
-  count = "${var.edge == "false" && var.filename != "" ? var.mod_count : 0}"
+  count = "${(var.edge == "false" || var.edge == false) && var.filename != "" ? var.mod_count : 0}"
 
   filename      = "${var.filename}"
   function_name = "${var.name}"
@@ -68,7 +68,7 @@ resource "aws_lambda_function" "lambda_file" {
 }
 
 resource "aws_lambda_function" "lambda_edge_file" {
-  count = "${var.edge == "true" && var.filename != "" ? var.mod_count : 0}"
+  count = "${(var.edge == "true" || var.edge == true) && var.filename != "" ? var.mod_count : 0}"
 
   filename      = "${var.filename}"
   function_name = "${var.lambda_function_name != "" ? var.lambda_function_name : var.name}"
