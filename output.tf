@@ -33,3 +33,7 @@ output "lambda_role_unique_id" {
 output "lambda_role_id" {
   value = local.lambda_role_id
 }
+
+output "function" {
+  value = aws_lambda_function.lambda
+}
