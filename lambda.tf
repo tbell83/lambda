@@ -3,7 +3,7 @@ resource "aws_lambda_function" "lambda" {
 
   s3_bucket     = var.s3_bucket
   s3_key        = var.s3_key
-  filename      = var.filename == null && var.s3_bucket == null && var.s3_key == null ? file("dummy.zip") : var.filename
+  filename      = var.filename == null && var.s3_bucket == null && var.s3_key == null ? "dummy.zip" : var.filename
   function_name = var.lambda_function_name != "" ? var.lambda_function_name : var.name
   runtime       = var.runtime
   handler       = var.handler
