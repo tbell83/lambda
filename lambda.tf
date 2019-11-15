@@ -19,7 +19,10 @@ resource "aws_lambda_function" "lambda" {
     security_group_ids = var.vpc_config_security_group_ids
   }
 
-  environment {
-    variables = var.environment_variables
+  dynamic "environment" {
+    for_each = var.environment_variables != null ? [1] : []
+    content {
+      variables = var.environment_variables
+    }
   }
 }
