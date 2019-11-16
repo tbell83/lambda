@@ -3,7 +3,7 @@ output "cloudwatch_log_group" {
 }
 
 output "iam_role" {
-  value = var.lambda_role != "" ? aws_iam_role.lambda : data.aws_iam_role.lambda
+  value = local.role == true ? aws_iam_role.lambda : data.aws_iam_role.lambda
 }
 
 output "iam_policy" {
