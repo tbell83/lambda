@@ -131,5 +131,6 @@ variable "env" {
 }
 
 variable "sns_topic_arn" {
-  default = null
+  description = "If passed, create cloudwatch monitor alarms for duration, throttles, invocations, and errors."
+  default     = null
 }
