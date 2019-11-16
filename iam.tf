@@ -41,7 +41,7 @@ resource "aws_iam_policy" "lambda" {
 resource "aws_iam_role_policy_attachment" "lambda-lambda" {
   count = var.mod_count
 
-  role       = local.role = true ? aws_iam_role.lambda[count.index].name : data.aws_iam_role.lambda[count.index].name
+  role       = local.role == true ? aws_iam_role.lambda[count.index].name : data.aws_iam_role.lambda[count.index].name
   policy_arn = aws_iam_policy.lambda[count.index].arn
 }
 
