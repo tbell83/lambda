@@ -126,10 +126,10 @@ variable "reserved_concurrent_executions" {
   default = -1
 }
 
-variable "alerting" {
-  default = false
-}
-
 variable "env" {
   default = ""
+}
+
+variable "sns_topic_arn" {
+  default = null
 }
