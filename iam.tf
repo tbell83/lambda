@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_policy" "lambda" {
   count = var.mod_count
 
-  name   = var.lambda_policy_name != "" ? var.lambda_policy_name : "${var.name}_lambda_execution_policy_${join("", data.aws_region.current[count.index].name)}"
+  name   = var.lambda_policy_name != "" ? var.lambda_policy_name : "${var.name}_lambda_execution_policy_${data.aws_region.current[count.index].name}"
   path   = "/lambda_module/"
   policy = data.aws_iam_policy_document.lambda[count.index].json
 }
