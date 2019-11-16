@@ -1,35 +1,31 @@
-output "lambda_invoke_arn" {
-  value = "${local.lambda_invoke_arn}"
+output "iam_role" {
+  value = local.role == true ? aws_iam_role.lambda : data.aws_iam_role.lambda
 }
 
-output "lambda_arn" {
-  value = "${local.lambda_arn}"
+output "iam_policy" {
+  value = aws_iam_policy.lambda
 }
 
-output "lambda_function_name" {
-  value = "${local.lambda_function_name}"
+output "lambda_function" {
+  value = aws_lambda_function.lambda
 }
 
-output "lambda_role_arn" {
-  value = "${local.lambda_role_arn}"
+output "cloudwatch_log_group" {
+  value = aws_cloudwatch_log_group.lambda
 }
 
-output "lambda_qualified_arn" {
-  value = "${local.lambda_qualified_arn}"
+output "cloudwatch_metric_alarm_throttles" {
+  value = aws_cloudwatch_metric_alarm.throttles
 }
 
-output "lambda_version" {
-  value = "${local.lambda_version}"
+output "cloudwatch_metric_alarm_duration" {
+  value = aws_cloudwatch_metric_alarm.duration
 }
 
-output "lambda_role_name" {
-  value = "${local.lambda_role_name}"
+output "cloudwatch_metric_alarm_invocations" {
+  value = aws_cloudwatch_metric_alarm.invocations
 }
 
-output "lambda_role_unique_id" {
-  value = "${local.lambda_role_unique_id}"
-}
-
-output "lambda_role_id" {
-  value = "${local.lambda_role_id}"
+output "cloudwatch_metric_alarm_errors" {
+  value = aws_cloudwatch_metric_alarm.errors
 }
