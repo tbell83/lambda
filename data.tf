@@ -7,6 +7,6 @@ data "aws_region" "current" {
 }
 
 data "aws_iam_role" "lambda" {
-  count = var.lambda_role != "" ? var.mod_count : 0
+  count = local.role == false ? var.mod_count : 0
   name  = var.lambda_role
 }

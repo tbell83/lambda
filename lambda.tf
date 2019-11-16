@@ -13,7 +13,7 @@ resource "aws_lambda_function" "lambda" {
   memory_size                    = var.memory_size
   timeout                        = var.timeout
   reserved_concurrent_executions = var.reserved_concurrent_executions
-  role                           = var.lambda_role != "" ? join("", data.aws_iam_role.lambda.*.arn) : join("", aws_iam_role.lambda.*.arn)
+  role                           = local.role == true ? data.aws_iam_role.lambda[count.index].arn : aws_iam_role.lambda[count.index].arn
 
   vpc_config {
     subnet_ids         = var.vpc_config_subnet_ids
