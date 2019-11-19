@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "lambda" {
 
   statement {
     sid       = "CreateCloudwatchLogGroups"
-    resources = ["arn:aws:logs:${data.aws_region.current[count.index].name}:${data.aws_caller_identity.current[count.index].account_id}:*"]
+    resources = ["arn:aws:logs:*:${data.aws_caller_identity.current[count.index].account_id}:*"]
     actions   = ["logs:CreateLogGroup"]
   }
 
@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "lambda" {
     sid = "WriteCloudwatchLogs"
     resources = [
       "arn:aws:logs:${data.aws_region.current[count.index].name}:${data.aws_caller_identity.current[count.index].account_id}:log-group:/aws/lambda/${var.name}:*",
-      "arn:aws:logs:${data.aws_region.current[count.index].name}:${data.aws_caller_identity.current[count.index].account_id}:log-group:/aws/lambda/*.${var.name}:*",
+      "arn:aws:logs:*:${data.aws_caller_identity.current[count.index].account_id}:log-group:/aws/lambda/*.${var.name}:*",
     ]
 
     actions = [
