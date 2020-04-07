@@ -134,3 +134,8 @@ variable "sns_topic_arn" {
   description = "If passed, create cloudwatch monitor alarms for duration, throttles, invocations, and errors."
   default     = null
 }
+
+variable "kms_key_arn" {
+  description = "If passed, uses KMS to encrypt environment variables."
+  default     = null
+}
