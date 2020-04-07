@@ -5,7 +5,7 @@ resource "aws_lambda_function" "lambda" {
   filename                       = var.filename == null && var.s3_bucket == null && var.s3_key == null ? "dummy.zip" : var.filename
   function_name                  = var.lambda_function_name != "" ? var.lambda_function_name : var.name
   handler                        = var.handler
-  kms_key_arn                    = var.kms_key_arn == null ? null : var.kms_key_arn
+  kms_key_arn                    = var.kms_key_arn
   layers                         = var.layers
   memory_size                    = var.memory_size
   reserved_concurrent_executions = var.reserved_concurrent_executions
