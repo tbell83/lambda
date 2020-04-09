@@ -14,18 +14,14 @@ output "cloudwatch_log_group" {
   value = aws_cloudwatch_log_group.lambda
 }
 
-output "cloudwatch_metric_alarm_throttles" {
-  value = aws_cloudwatch_metric_alarm.throttles
-}
-
-output "cloudwatch_metric_alarm_duration" {
-  value = aws_cloudwatch_metric_alarm.duration
-}
-
 output "cloudwatch_metric_alarm_invocations" {
   value = aws_cloudwatch_metric_alarm.invocations
 }
 
-output "cloudwatch_metric_alarm_errors" {
-  value = aws_cloudwatch_metric_alarm.errors
+output "cloudwatch_metric_alarm_throttles" {
+  value = aws_cloudwatch_metric_alarm.throttles
+}
+
+output "cloudwatch_metric_alarm_success_rate" {
+  value = aws_cloudwatch_metric_alarm.duration
 }

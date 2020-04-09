@@ -6,26 +6,6 @@ resource "aws_cloudwatch_log_group" "lambda" {
   tags              = var.tags
 }
 
-resource "aws_cloudwatch_metric_alarm" "duration" {
-  count = local.alerting == true ? var.mod_count : 0
-
-  alarm_actions       = [var.sns_topic_arn]
-  alarm_description   = "This metric monitors duration of ${aws_lambda_function.lambda[count.index].function_name} lambda"
-  alarm_name          = "${aws_lambda_function.lambda[count.index].function_name}-duration"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "2"
-  metric_name         = "Duration"
-  namespace           = "AWS/Lambda"
-  ok_actions          = [var.sns_topic_arn]
-  period              = "120"
-  statistic           = "Maximum"
-  threshold           = "500"
-
-  dimensions = {
-    FunctionName = aws_lambda_function.lambda[count.index].function_name
-  }
-}
-
 resource "aws_cloudwatch_metric_alarm" "throttles" {
   count = local.alerting == true ? var.mod_count : 0
 
@@ -39,7 +19,7 @@ resource "aws_cloudwatch_metric_alarm" "throttles" {
   ok_actions          = [var.sns_topic_arn]
   period              = "120"
   statistic           = "Maximum"
-  threshold           = "25"
+  threshold           = var.alarm_threshold_throttles
 
   dimensions = {
     FunctionName = aws_lambda_function.lambda[count.index].function_name
@@ -59,27 +39,7 @@ resource "aws_cloudwatch_metric_alarm" "invocations" {
   ok_actions          = [var.sns_topic_arn]
   period              = "120"
   statistic           = "Sum"
-  threshold           = "25"
-
-  dimensions = {
-    FunctionName = aws_lambda_function.lambda[count.index].function_name
-  }
-}
-
-resource "aws_cloudwatch_metric_alarm" "errors" {
-  count = local.alerting == true ? var.mod_count : 0
-
-  alarm_actions       = [var.sns_topic_arn]
-  alarm_description   = "This metric monitors errors of ${aws_lambda_function.lambda[count.index].function_name} lambda"
-  alarm_name          = "${aws_lambda_function.lambda[count.index].function_name}-errors"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "2"
-  metric_name         = "Errors"
-  namespace           = "AWS/Lambda"
-  ok_actions          = [var.sns_topic_arn]
-  period              = "120"
-  statistic           = "Maximum"
-  threshold           = "25"
+  threshold           = var.alarm_threshold_invocations
 
   dimensions = {
     FunctionName = aws_lambda_function.lambda[count.index].function_name
@@ -95,7 +55,7 @@ resource "aws_cloudwatch_metric_alarm" "success_rate" {
   comparison_operator = "LessThanOrEqualToThreshold"
   evaluation_periods  = "1"
   ok_actions          = [var.sns_topic_arn]
-  threshold           = var.success_rate_threshold
+  threshold           = var.alarm_threshold_success_rate
   treat_missing_data  = "ignore"
 
   metric_query {
