@@ -139,3 +139,8 @@ variable "kms_key_arn" {
   description = "If passed, uses KMS to encrypt environment variables."
   default     = null
 }
+
+variable "success_rate_threshold" {
+  description = "If the success rate (%) of this lambda drops below this threshold it will alert."
+  default     = 90
+}
