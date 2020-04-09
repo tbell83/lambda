@@ -23,5 +23,5 @@ output "cloudwatch_metric_alarm_throttles" {
 }
 
 output "cloudwatch_metric_alarm_success_rate" {
-  value = aws_cloudwatch_metric_alarm.duration
+  value = aws_cloudwatch_metric_alarm.success_rate
 }
