@@ -59,7 +59,7 @@ resource "aws_cloudwatch_metric_alarm" "success_rate" {
   treat_missing_data  = "ignore"
 
   metric_query {
-    id          = "success_rate"
+    id          = "availability"
     expression  = "100 - 100 * errors / MAX([errors, invocations])"
     label       = "Success Rate (%)"
     return_data = "true"
@@ -69,7 +69,7 @@ resource "aws_cloudwatch_metric_alarm" "success_rate" {
     id = "invocations"
 
     metric {
-      metric_name = "invocations"
+      metric_name = "Invocations"
       namespace   = "AWS/Lambda"
       period      = "300"
       stat        = "Sum"
@@ -77,6 +77,7 @@ resource "aws_cloudwatch_metric_alarm" "success_rate" {
 
       dimensions = {
         FunctionName = aws_lambda_function.lambda[count.index].function_name
+        Resource     = aws_lambda_function.lambda[count.index].function_name
       }
     }
   }
@@ -85,7 +86,7 @@ resource "aws_cloudwatch_metric_alarm" "success_rate" {
     id = "errors"
 
     metric {
-      metric_name = "errors"
+      metric_name = "Errors"
       namespace   = "AWS/Lambda"
       period      = "300"
       stat        = "Sum"
@@ -93,6 +94,7 @@ resource "aws_cloudwatch_metric_alarm" "success_rate" {
 
       dimensions = {
         FunctionName = aws_lambda_function.lambda[count.index].function_name
+        Resource     = aws_lambda_function.lambda[count.index].function_name
       }
     }
   }
