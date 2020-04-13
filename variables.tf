@@ -140,19 +140,27 @@ variable "kms_key_arn" {
   default     = null
 }
 
-# TODO: Change these into a map of threshold + evaluation period + toggle
-
-variable "alarm_threshold_invocations" {
-  description = "If the amount of invocatiosn of this lambda of this lambda drops below this threshold it will alert."
-  default     = 25
-}
-
-variable "alarm_threshold_success_rate" {
-  description = "If the success rate (%) of this lambda drops below this threshold it will alert."
-  default     = 90
-}
-
-variable "alarm_threshold_throttles" {
-  description = "If the amount of throttles of this lambda exceeds this threshold it will alert."
-  default     = 25
+variable "cloudwatch_alarms" {
+  description = "Overridable configuration options for base CloudWatch alarms."
+  type        = map(map(number))
+  default = {
+    invocations = {
+      enabled            = 1
+      evaluation_periods = 2
+      period             = 120
+      threshold          = 25
+    },
+    success_rate = {
+      enabled            = 1
+      evaluation_periods = 2
+      period             = 300
+      threshold          = 90
+    },
+    throttles = {
+      enabled            = 1
+      evaluation_periods = 2
+      period             = 120
+      threshold          = 25
+    }
+  }
 }
