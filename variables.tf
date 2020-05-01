@@ -134,3 +134,33 @@ variable "sns_topic_arn" {
   description = "If passed, create cloudwatch monitor alarms for duration, throttles, invocations, and errors."
   default     = null
 }
+
+variable "kms_key_arn" {
+  description = "If passed, uses KMS to encrypt environment variables."
+  default     = null
+}
+
+variable "cloudwatch_alarms" {
+  description = "Overridable configuration options for base CloudWatch alarms."
+  type        = map(map(number))
+  default = {
+    invocations = {
+      enabled            = 1
+      evaluation_periods = 2
+      period             = 120
+      threshold          = 25
+    },
+    success_rate = {
+      enabled            = 1
+      evaluation_periods = 2
+      period             = 300
+      threshold          = 90
+    },
+    throttles = {
+      enabled            = 1
+      evaluation_periods = 2
+      period             = 120
+      threshold          = 25
+    }
+  }
+}
